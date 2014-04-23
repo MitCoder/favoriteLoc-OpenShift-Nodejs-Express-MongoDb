@@ -28,7 +28,7 @@
 				}
 			});
      },
-     ajaxPost: function(currLocation)
+     ajaxPost: function(currLocation,callback)
      { console.log(currLocation);
          
 		$.ajax({
@@ -38,8 +38,8 @@
 				data: JSON.stringify(currLocation),
 				dataType: "text",
 				success: function( response ){
-					console.log("post "+response);					
-					
+					console.log("post "+response);	
+					callback(response);					
 				},
 				error: function( error ){
 
@@ -48,7 +48,7 @@
 				}
 			});
      },
-     ajaxPut: function(currLocation)
+     ajaxPut: function(currLocation,callback)
      {
         console.log(JSON.stringify(currLocation)); 
         $.ajax({
@@ -59,7 +59,9 @@
 				dataType: "text",
 				success: function( response ){
 				console.log("put request success");
-					console.log(response);	
+				console.log(response);
+				callback(response);
+	
 					
 				},
 				error: function( error ){
@@ -69,7 +71,7 @@
 			});
 		
      },
-      ajaxDelete: function(id)
+      ajaxDelete: function(id,callback)
      {  console.log("ajax delete");
         console.log(JSON.stringify(id)); 
         $.ajax({
@@ -79,9 +81,9 @@
 				data: JSON.stringify(id),
 				dataType: "text",
 				success: function( response ){
-				console.log("delete request success");
-				console.log(response);					
-					
+					console.log("delete request success");
+					console.log(response);	
+					callback(response);			
 				},
 				error: function( error ){
     				console.log( "ERROR:", error );

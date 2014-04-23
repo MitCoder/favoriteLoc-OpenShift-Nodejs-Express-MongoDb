@@ -2,12 +2,14 @@
  Author: Mithila Reid
  Date: April 23,2014
  Purpose: The code does the following:
- 1. Calculates current location of the user
- 2. Allows the user to add a new location other than current location as well as tag(eg: work,home).
- 3. Retrieve all the locations that the user has added
- 4. Update the selected location to current location or location added by user
- 5. Delete the location
- Note: This javascript file refers util.js file to call ajax requests and calculate latitude and longitude of a location. 
+ 1. Calculates current location of the user.
+ 2. Allows the user to add a new location as current location(default) as well as tag(eg: work,home).
+ 3. Allows the user to add a new location other than current location as well as tag.
+ 4. Retrieve all the locations that the user has added.
+ 5. Update the selected location to current location or location added by user.(Current location is by default)
+ 6. Delete the location
+ 7. Display the current location and the list of stored locations on map.
+ Note: This javascript file refers util.js file to make ajax requests (get,post,put and delete) and a function to calculate latitude and longitude. 
 
  * */
 
@@ -66,21 +68,48 @@ function infoLatLong(lat, lng) {
 		            }
 	         }
            currLocation.push({"city":city.long_name,"address":address,"latitude":lat.toString(),"longitude":lng.toString()});
+           //retrieve all the locations that the user has added
            $util.ajaxGet(currLocation,function(response){
              
     	     var jsonRes=JSON.parse(response);
 			 var appendStr="";
 		     console.log(jsonRes);
+		     
+		     var map = new google.maps.Map(document.getElementById('mapCanvas'), {
+			      zoom: 5,
+			      center: new google.maps.LatLng(currLocation[0].latitude, currLocation[0].longitude),
+			      mapTypeId: google.maps.MapTypeId.ROADMAP
+			    });	
+			  var infowindow = new google.maps.InfoWindow();
+    		  var marker, i;
+		     
+		     
+		     
 			 $("#listLocationStart").append('<ol class="tracks"> </ol>');
 				    
 			 for (var i=0;i<jsonRes.length;i++)
 			 {       countLocationList++;
                      appendStr=appendStr+'<li class="track"><span class="title">'+jsonRes[i].city+'</span>';
                      appendStr=appendStr+'<span class="title">'+jsonRes[i].address+'</span><span class="title">'+jsonRes[i].application+'</span>';
-                     appendStr=appendStr+'<img src="img/update.jpg" id="updateLocation" data="'+jsonRes[i].id+'" width="35" height="35" style="margin:0x padding:14px"><img src="img/delete.jpg" id="deleteLocation" data="'+jsonRes[i].id+'" width="35" height="35"/></li>';       					 
+                     appendStr=appendStr+'<img src="img/update.jpg" id="updateLocation" data="'+jsonRes[i].id+'" width="35" height="35" style="margin:0x padding:14px"><img src="img/delete.jpg" id="deleteLocation" data="'+jsonRes[i].id+'" width="35" height="35"/></li>';
+                     
+                     //display retrieved locations from ajax get onto map
+                     marker = new google.maps.Marker({
+					        position: new google.maps.LatLng(jsonRes[i].latitude, jsonRes[i].longitude),
+					        map: map
+					      });	       					 
        					    		           
-            }  
+            }
+              
             $(".tracks").append(appendStr);
+            
+            //display the current location on the map
+            var marker = new google.maps.Marker({
+			      position: latlng,
+			      map: map,
+			      title: 'Current Location',
+			      icon:'/img/currLoc.jpg'
+			  })
 				
 			//if user clicks update icon, text box appears
 		    $(".tracks #updateLocation").click(function(){  
@@ -109,7 +138,12 @@ function infoLatLong(lat, lng) {
 					  	       updateTest[0]["id"]=id;	
 					  	       updateTest[0]["application"]="";	
 	
-							   $util.ajaxPut(updateTest);//ajax call to update location information
+							    //ajax call to update location information
+							    $util.ajaxPut(updateTest,function(response){
+							    	console.log("put response in client js for diff loc"+response);
+							    	location.reload();//if the put request is successfull reload the page
+							    });
+
 	   
 					  		}
 					  	});	
@@ -118,17 +152,29 @@ function infoLatLong(lat, lng) {
 				  	{
 				  		currLocation[0]["id"]=id;	
 					  	currLocation[0]["application"]="";	
-				  		$util.ajaxPut(currLocation);//ajax call to update location information.				  		
+
+				  		//ajax call to update location information.	
+				  		 $util.ajaxPut(currLocation,function(response){
+							    	console.log("put response in client js for curr loc "+response);
+							    	 location.reload();//if the put request is successfull reload the page
+
+							    });			  		
 				  	}		  	
 				    
              });
+             
              //delete the specific record pertaining to particular row clicked.	
              $(".tracks #deleteLocation").click(function(){  
              	    var updateArr=[];
 				    var id=$(this).attr("data");
 				    updateArr.push({"id":id});
 				   	console.log("client delete"+id);	
-				    $util.ajaxDelete(updateArr);//ajax call to delete location information
+				   // $util.ajaxDelete(updateArr);//ajax call to delete location information
+				    $util.ajaxDelete(updateArr,function(response){
+					    	console.log("delete response in client js "+response);
+					    	location.reload();//if the delete request is successfull reload the page
+
+					});	
 	  	     });  
 	  	    
               		  	
@@ -201,7 +247,16 @@ function infoLatLong(lat, lng) {
 
     							
 		          				console.log(JSON.stringify(currLocation));
-        					    $util.ajaxPost(currLocation);//add new different location other than Current Location through ajax POST request.
+        					    //add new different location other than Current Location through ajax POST request.
+        					    $util.ajaxPost(currLocation,function(response){
+        					    	console.log("post response in client js for diff loc"+response);
+        					    	if(response)
+        					    	{
+	        					    	 window.location.reload(true);//if the post request is successfull reload the page
+        					    	}
+        					    
+        					    });
+
 
 					    } else {
 							            alert("Something got wrong " + status);
@@ -215,7 +270,11 @@ function infoLatLong(lat, lng) {
 		          currLocation[0]["id"]=countLocationList.toString();
 
        		      console.log(JSON.stringify(currLocation));
-       		      $util.ajaxPost(currLocation);//add the default Current Location through ajax POST request
+       		     //add new location as Current Location through ajax POST request.
+        		  $util.ajaxPost(currLocation,function(response){
+        				console.log("post response in client js for curr loc"+response);
+  					    window.location.reload(true);//if the post request is successfull reload the page        					    
+        		});
 
 		      }
 			       

@@ -29,14 +29,14 @@ var App = function(){
   self.routes = {};
   
 
-  //returns all location
+  //returns all locations
   self.routes['/'] = function(req, res){
- 		console.log("gat method");			  
+     console.log("get method");			  
 
-    self.db.collection('location').find().toArray(function(err, names) {
-       res.setHeader("Content-Type:","application/json");
+     self.db.collection('location').find().toArray(function(err, names) {
+        res.setHeader("Content-Type:","application/json");
         console.log("success get");
-	   console.log(names);
+	    console.log(names);
 		//res.send(names);
 		res.send(JSON.stringify(names));   
     });
@@ -53,8 +53,7 @@ var App = function(){
      var longitude = req.body[0].longitude;
      var application = req.body[0].application;
 
-     console.log(req.body);
-    
+     console.log(req.body);    
      
       self.db.collection('location').insert(req.body[0], function(result){
 				console.log("post success");
@@ -62,10 +61,11 @@ var App = function(){
 			   //  res.end('success');
 		    });
   };
+  
   //update's a location based on id
   self.routes['putLocation'] = function(req, res){
 
-     var id=req.body[0].id;
+    var id=req.body[0].id;
  	var city=req.body[0].city;
  	var application=req.body[0].application;
  	var address=req.body[0].address;

@@ -719,8 +719,9 @@ margin-right: 25px;
 
 .container {
   margin-right: auto;
-  margin-left: auto;
+  /*margin-left: auto;*/
   *zoom: 1;
+ 
 }
 
 .container:before,
