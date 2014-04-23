@@ -89,9 +89,10 @@ function infoLatLong(lat, lng) {
 				    
 			 for (var i=0;i<jsonRes.length;i++)
 			 {       countLocationList++;
+			    	console.log("get count is "+jsonRes[i]._id);
                      appendStr=appendStr+'<li class="track"><span class="title">'+jsonRes[i].city+'</span>';
                      appendStr=appendStr+'<span class="title">'+jsonRes[i].address+'</span><span class="title">'+jsonRes[i].application+'</span>';
-                     appendStr=appendStr+'<img src="img/update.jpg" id="updateLocation" data="'+jsonRes[i].id+'" width="35" height="35" style="margin:0x padding:14px"><img src="img/delete.jpg" id="deleteLocation" data="'+jsonRes[i].id+'" width="35" height="35"/></li>';
+                     appendStr=appendStr+'<img src="img/update.jpg" id="updateLocation" data="'+jsonRes[i]._id+'" width="35" height="35" style="margin:0x padding:14px"><img src="img/delete.jpg" id="deleteLocation" data="'+jsonRes[i]._id+'" width="35" height="35"/></li>';
                      
                      //display retrieved locations from ajax get onto map
                      marker = new google.maps.Marker({
@@ -156,7 +157,7 @@ function infoLatLong(lat, lng) {
 				  		//ajax call to update location information.	
 				  		 $util.ajaxPut(currLocation,function(response){
 							    	console.log("put response in client js for curr loc "+response);
-							    	 location.reload();//if the put request is successfull reload the page
+							    	location.reload();//if the put request is successfull reload the page
 
 							    });			  		
 				  	}		  	
@@ -234,6 +235,11 @@ function infoLatLong(lat, lng) {
 							                    console.log(JSON.stringify(currLocation));
 							                    break;
 							                }
+							                else
+							                {
+							           			currLocation[0]["city"]= address;
+
+							                }
 							                
 									              
 							            }
@@ -259,7 +265,7 @@ function infoLatLong(lat, lng) {
 
 
 					    } else {
-							            alert("Something got wrong " + status);
+							            alert("Invalid Location " + status);
 						  }
       			  });	          	
 		          	

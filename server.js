@@ -75,7 +75,7 @@ var App = function(){
     console.log(req.body[0]);
     console.log(id);
     
-     self.db.collection('location').update({id:id}, {id:id,city: city, address: address,application:application,latitude:latitude,longitude:longitude}, function(err) {
+     self.db.collection('location').update({_id:new mongodb.ObjectID(id)}, {id:id,city: city, address: address,application:application,latitude:latitude,longitude:longitude}, function(err) {
 		if(err)
 		    throw err;
 		else
@@ -93,7 +93,7 @@ var App = function(){
         console.log(req.body[0]);
 	 
 	    
-	  self.db.collection('location').remove({id:locationDelete}, function(err) {
+	  self.db.collection('location').remove({_id:new mongodb.ObjectID(locationDelete)}, function(err) {
 			if(err)
 			    throw err;
 			else

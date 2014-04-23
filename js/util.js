@@ -113,6 +113,12 @@
 
 				                    break;
 				                }
+				                else
+							    {
+							 		updateLocationArr.push({"city":address,"address":address,"latitude":results[0].geometry.location.lat(),"longitude":results[0].geometry.location.lng()});
+
+
+							     }
 							                
 								              
 				          }
@@ -122,7 +128,7 @@
 		     }
 		     else
 		     {
-				   alert("Something got wrong, location entered to update the existing one was invalid " + status);
+				   alert("Location entered to update the existing one was invalid " + status);
 			 }
       	 });
         	
