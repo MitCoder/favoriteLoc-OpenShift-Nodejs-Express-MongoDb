@@ -1,4 +1,5 @@
-Utility: This is an application to view current location, add a new location along with its tag, update and delete locations.
+Utility: This is an application to view current location, add a new location along with its tag, update and delete locations. The application 
+can be viewed at http://favloc-favspot.rhcloud.com/
 
 UI:HTML,Bootstrap
 Javascript:jquery
