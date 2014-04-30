@@ -1,0 +1,8 @@
+[0430/121519:ERROR:backend_impl.cc(1203)] Critical error found -8
+[0430/121519:WARNING:storage_block-inl.h(119)] Failed data load.
+[0430/121524:WARNING:storage_block-inl.h(119)] Failed data load.
+[0430/121524:WARNING:storage_block-inl.h(119)] Failed data load.
+[0430/121524:WARNING:storage_block-inl.h(119)] Failed data load.
+[0430/121524:ERROR:cache_util_win.cc(48)] Unable to move the cache: 5
+[0430/121524:ERROR:backend_impl.cc(146)] Unable to move cache folder
+[0430/121524:ERROR:backend_impl.cc(2139)] Corrupt Index file
