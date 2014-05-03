@@ -6,3 +6,7 @@
 [0430/121524:ERROR:cache_util_win.cc(48)] Unable to move the cache: 5
 [0430/121524:ERROR:backend_impl.cc(146)] Unable to move cache folder
 [0430/121524:ERROR:backend_impl.cc(2139)] Corrupt Index file
+[0503/123635:ERROR:backend_impl.cc(2139)] Corrupt Index file
+[0503/123635:ERROR:cache_util_win.cc(48)] Unable to move the cache: 5
+[0503/123635:ERROR:backend_impl.cc(146)] Unable to move cache folder
+[0503/123635:ERROR:backend_impl.cc(287)] Unable to create cache
