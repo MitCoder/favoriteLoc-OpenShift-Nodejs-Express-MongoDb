@@ -1,5 +1,4 @@
 /*
- * Author: Mithila Reid
  * Date: April 22,2014
  * This file is called by clientNode.js.
  */

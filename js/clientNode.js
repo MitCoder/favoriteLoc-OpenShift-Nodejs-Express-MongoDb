@@ -1,5 +1,4 @@
 /*
- Author: Mithila Reid
  Date: April 23,2014
  Purpose: The code does the following:
  1. Calculates current location of the user.
