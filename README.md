@@ -13,6 +13,7 @@ Host:openshift
 
 
 Application:
+
 1. The user can view its current location which is also incorporated on the map. The current location on the map is shown with a green marker.
 
 2. The user can view a list of all locations that have been added along with the address and tag. User can update and delete, each location.
