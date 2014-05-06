@@ -2,9 +2,13 @@ Utility: This is an application to view current location, add a new location alo
 hosted on http://favloc-favspot.rhcloud.com/.
 
 UI:HTML,Bootstrap
+
 Javascript:jquery
+
 Server-side scripting:Nodejs express
+
 Database:Mongodb
+
 Host:openshift
 
 
